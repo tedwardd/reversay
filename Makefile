@@ -6,4 +6,4 @@ build:
 	go build -o $(BIN) .
 
 run: build
-	./$(BIN)
+	./$(BIN) $(ARGS)

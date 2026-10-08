@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"log"
 	"net"
@@ -25,7 +26,12 @@ func handleConn(conn net.Conn) {
 }
 
 func main() {
-	ln, err := net.Listen("tcp", ":0")
+	host := flag.String("host", "", "IP address to listen on (default: all interfaces)")
+	port := flag.Int("port", 0, "port to listen on (default: random)")
+	flag.Parse()
+
+	addr := net.JoinHostPort(*host, fmt.Sprintf("%d", *port))
+	ln, err := net.Listen("tcp", addr)
 	if err != nil {
 		log.Fatal(err)
 	}
